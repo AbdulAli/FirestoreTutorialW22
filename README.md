@@ -88,6 +88,7 @@ if (cityName.length()>0 && provinceName.length()>0) {
 // If there’s some data in the EditText field, then we create a new key-value pair.
 data.put("Province Name", provinceName);
 ```
+* Note that the key is named as ‘Province Name’. This is to make sure that the collection ID is the same as that of the city name. 
 
 ### Step 3: Creating Firebase Database
 
@@ -129,7 +130,79 @@ data.put("Province Name", provinceName);
   * Sync your project by clicking this elephant on the top right corner: <img width="53" alt="Screen Shot 2022-02-07 at 2 00 53 PM" src="https://user-images.githubusercontent.com/6480345/152871107-ded91116-9036-47c5-ac1b-c1f86f2df4ca.png">
   * Click `Next`
   * Click `Continue to console`
- * You are done creating a firebase project, and a database in it on cloud and also created a mapping (JSON file) between your code and the cloud database. Congratulations! 🎉 Now we are going to add stuff into this databaes using our app.
- * Let's get back to the code to make sure that whenever someone clicks `ADD CITY`, the city and province get added to the `database` in cloud.
+  * You are done creating a firebase project, and a database in it on cloud and also created a mapping (JSON file) between your code and the cloud database. Congratulations! 🎉 Now we are going to add stuff into this databaes using our app.
+* Let's get back to the code to make sure that whenever someone clicks `ADD CITY`, the city and province get added to the `database` in cloud.
+  * In the `Main Activity` create an instance of the Firestore as follows:
+   ```
+     // Access a Cloud Firestore instance from your Activity
+     db = FirebaseFirestore.​getInstance​();
+   ```
+  * The next step is to get a top-level reference to the collection in the database.
+   ```
+    // Get a top level reference to the collection
+    final CollectionReference collectionReference = db.collection("Cities");
+   ```
+  * You remember the `onClick` listenener of `addCityButton` that we created in the `onCreate()` method? We are going to add the save city and province in database logic into this `onClick` listener. In `onClick` listener, after the if(..) condition, write:
+   ```
+   // The set method sets a unique id for the document
+   collectionReference
+   .document(cityName)
+   .set(data)
+   .addOnSuccessListener(new OnSuccessListener<Void>() {
+   @Override
+   public void onSuccess(Void aVoid) {
+   // These are a method which gets executed when the task is succeeded
+   ​
+   Log.​d​(TAG, "Data has been added successfully!");
+   }
+   })
+   .addOnFailureListener(new OnFailureListener() {
+   @Override
+   public void onFailure(@NonNull Exception e) {
+   // These are a method which gets executed if there’s any problem
+   Log.​d​(TAG, "Data could not be added!" + e.toString());
+   }
+   });
+   ```
+  * Finally, we set the EditText fields to an empty string for any new input.
+   ```
+   // Setting the fields to null so that user can add a new city
+   addCityEditText.setText("");
+   addProvinceEditText.setText("");
+   ```
+   
+   * In the end, your ‘onClick’ method should look like this.
+     <img width="575" alt="Screen Shot 2022-02-07 at 2 52 09 PM" src="https://user-images.githubusercontent.com/6480345/152878262-2add2842-d9ef-448b-a99c-6c57af3d091e.png">
+     
+   * Now we implement the most important feature Firestore provides, realtime updates. We add a snapshot listener to the ‘collectionReference’. A snapshot is the state of the database at any given point of time. In `onCreate()` method, write:
+   ```
+     collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
+     @Override
+     public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable
+     FirebaseFirestoreException error) {
+     }
+     });
+   ```
+   * Now we override the `onEvent` method. This method is executed whenever any new event occurs in the remote database. In `onEvent` method, write:
+   ```
+     // Clear the old list
+     cityDataList.clear();
+     for(QueryDocumentSnapshot doc: queryDocumentSnapshots)
+     {
+     Log.​d​(TAG, String.​valueOf​(doc.getData().get("Province Name")));
+     String city = doc.getId();
+     String province = (String) doc.getData().get("Province Name");
+     cityDataList.add(new City(city, province)); // Adding the cities and provinces from FireStore
+     }
+     cityAdapter.notifyDataSetChanged(); // Notifying the adapter to render any new data fetched from the cloud
+   ```
+ * Go ahead and run the application. If you see an empty list, then it means that your Firestore Storage does not        have any data. Otherwise, you will get some data.
+ * Now try to add a city along with a province. Refresh your firestore project webpage online, it would show the populated data in your database.
 
+
+
+### KNOWN ISSUES:
+ * Android Studio sometimes gives an error regarding .dex files and how it cannot fit the requested class in a single ‘dex’ file. To resolve this, include the following in your app level gradle file.
+ * Under dependencies, in app:module level build.gradle, add: `implementation 'com.android.support:multidex:1.0.3'`
+ * And under the `defaultConfig` section under the `android` section (in the same app:module level `build.gradle`), add the following line: `multiDexEnabled true`
 
