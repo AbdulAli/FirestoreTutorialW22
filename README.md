@@ -6,7 +6,7 @@
   *	At the end, make sure that you have the right firestore dependency that you auto imported through Option+Return (MAC) or Ctrl+Enter (Windows). Yes, don’t copy and paste any firestore dependency, let Android Studio resolve it for you by itself.
 
 # Let’s get started!
-### Note: [Step 1](#step-1) and [Step 2](#step-2) is all about what we already know from previous labs. Firebase starts from [Step 3](#step-3).
+### Note: [Step 1](#step-1) and [Step 2](#step-2) is all about what we already know from previous labs. Firebase starts from [Step 3](#step-3-creating-firebase-database).
 
 ### Step 1:
 * Clone [ListyCityLink](https://github.com/simpleParadox/CMPUT-301-CustomList.git) project: `git clone https://github.com/simpleParadox/CMPUT-301-CustomList.git` 
