@@ -128,7 +128,7 @@ data.put("Province Name", provinceName);
     * Add `apply plugin: 'com.google.gms.google-services'` under this line `apply plugin: 'com.android.application'` 
     * DO NOT MAKE ANY CHANGES IN `dependencies{..`, even if the firebase website tells you to. 🙂
   * Sync your project by clicking this elephant on the top right corner: <img width="53" alt="Screen Shot 2022-02-07 at 2 00 53 PM" src="https://user-images.githubusercontent.com/6480345/152871107-ded91116-9036-47c5-ac1b-c1f86f2df4ca.png">
-  * Click `Next`
+  * At the website, Click `Next`
   * Click `Continue to console`
   * You are done creating a firebase project, and a database in it on cloud and also created a mapping (JSON file) between your code and the cloud database. Congratulations! 🎉 Now we are going to add stuff into this databaes using our app.
 * Let's get back to the code to make sure that whenever someone clicks `ADD CITY`, the city and province get added to the `database` in cloud.
