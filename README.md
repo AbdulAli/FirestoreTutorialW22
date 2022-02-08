@@ -32,11 +32,11 @@ We have completed updating the layout. Let’s write up the logic for the two Ed
 ```
   final String TAG = "Sample"; 
   Button addCityButton; 
-  final EditText addCityEditText;
-  final EditText addProvinceEditText;
+  EditText addCityEditText;
+  EditText addProvinceEditText;
   FirebaseFirestore db; 
 ```
-
+* Resolve the dependencies of Button, EditText, and Firebase, using option+return (Mac) or alt+enter (Windows)
 * Get the reference to the corresponding UI components from the xml file. Inside the `onCreate` method, do:
 ```
 addCityButton = findViewById(R.id.add_city_button);
