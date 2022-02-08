@@ -117,7 +117,7 @@ data.put("Province Name", provinceName);
     <img width="180" alt="Screen Shot 2022-02-07 at 1 46 16 PM" src="https://user-images.githubusercontent.com/6480345/152869342-bada1017-6926-44d8-b3e3-18e44003c58f.png">
   * This JSON file has all the security credentials that would help your app connect with google's firebase database that you created earlier.
   * But how will you app know that it has to read from this JSON? Don't worry! Follow the next steps.
-  * Click `Next`.
+  * On webpage, click `Next`.
   * ⚠️ ⚠️ YOU HAVE TWO `build.gradle` FILES! ⚠️ ⚠️ One `build.gradle` resides in `Project`, while the other `build.gradle` resides in `app:Module`. See: \
     <img width="180" alt="Screen Shot 2022-02-07 at 1 51 13 PM" src="https://user-images.githubusercontent.com/6480345/152869969-159d2364-85e7-40f0-aadd-42e2beb4224b.png">
   * Go to your project level `build.gradle`
