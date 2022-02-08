@@ -83,7 +83,7 @@ if (cityName.length()>0 && provinceName.length()>0) {
 }
 ```
 
-* If everything is okay, we add the data into the HashMap, so in the if block, we write:
+* If everything is okay, we add the data into the HashMap, so inside the `if` block, we write:
 ```
 // If there’s some data in the EditText field, then we create a new key-value pair.
 data.put("Province Name", provinceName);
