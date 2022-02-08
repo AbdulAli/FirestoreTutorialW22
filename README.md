@@ -128,14 +128,14 @@ data.put("Province Name", provinceName);
     * Add `apply plugin: 'com.google.gms.google-services'` under this line `apply plugin: 'com.android.application'` 
     * DO NOT MAKE ANY CHANGES IN `dependencies{..`, even if the firebase website tells you to. 🙂
   * Sync your project by clicking this elephant on the top right corner: <img width="53" alt="Screen Shot 2022-02-07 at 2 00 53 PM" src="https://user-images.githubusercontent.com/6480345/152871107-ded91116-9036-47c5-ac1b-c1f86f2df4ca.png">
-  * At the website, Click `Next`
+  * At the webpage, Click `Next`
   * Click `Continue to console`
   * You are done creating a firebase project, and a database in it on cloud and also created a mapping (JSON file) between your code and the cloud database. Congratulations! 🎉 Now we are going to add stuff into this databaes using our app.
 * Let's get back to the code to make sure that whenever someone clicks `ADD CITY`, the city and province get added to the `database` in cloud.
-  * In the `Main Activity` create an instance of the Firestore as follows:
+  * In the `Main Activity`, `onCreate` method create an instance of the Firestore as follows:
    ```
      // Access a Cloud Firestore instance from your Activity
-     db = FirebaseFirestore.​getInstance​();
+     db = FirebaseFirestore.getInstance();
    ```
   * The next step is to get a top-level reference to the collection in the database.
    ```
@@ -152,15 +152,15 @@ data.put("Province Name", provinceName);
    @Override
    public void onSuccess(Void aVoid) {
    // These are a method which gets executed when the task is succeeded
-   ​
-   Log.​d​(TAG, "Data has been added successfully!");
+   
+   Log.d(TAG, "Data has been added successfully!");
    }
    })
    .addOnFailureListener(new OnFailureListener() {
    @Override
    public void onFailure(@NonNull Exception e) {
    // These are a method which gets executed if there’s any problem
-   Log.​d​(TAG, "Data could not be added!" + e.toString());
+   Log.d(TAG, "Data could not be added!" + e.toString());
    }
    });
    ```
@@ -189,7 +189,7 @@ data.put("Province Name", provinceName);
      cityDataList.clear();
      for(QueryDocumentSnapshot doc: queryDocumentSnapshots)
      {
-     Log.​d​(TAG, String.​valueOf​(doc.getData().get("Province Name")));
+     Log.d(TAG, String.valueOf(doc.getData().get("Province Name")));
      String city = doc.getId();
      String province = (String) doc.getData().get("Province Name");
      cityDataList.add(new City(city, province)); // Adding the cities and provinces from FireStore
@@ -205,4 +205,12 @@ data.put("Province Name", provinceName);
  * Android Studio sometimes gives an error regarding .dex files and how it cannot fit the requested class in a single ‘dex’ file. To resolve this, include the following in your app level gradle file.
  * Under dependencies, in app:module level build.gradle, add: `implementation 'com.android.support:multidex:1.0.3'`
  * And under the `defaultConfig` section under the `android` section (in the same app:module level `build.gradle`), add the following line: `multiDexEnabled true`
+
+ * No static method metafactory? Solution: Inside `app:module` `build.gradle`'s `android{..`, paste:
+ ```
+ compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+ ```
 
